@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './styles/index.css';
 import { Route, Routes } from 'react-router-dom';
 import Header from "./components/Header/Header";
 import Menu from "./components/MenuPage/Menu";
