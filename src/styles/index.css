@@ -1,86 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
+
 :root {
-  --background-color: #F5FBFC;
-  --text-color: black;
-  --button-background-color: #35B8BE;
-  --button-text-color: white;
-  --background-second: #FFFFFF;
-  --input-background: #FAFAFA;
-  --input-border: #DDDDDD;
-  --transparent-button: black;
+  --bg: #f7fafc;
+  --surface: #ffffff;
+  --surface-alt: #f2f6f9;
+  --text: #0f172a;
+  --muted: #4b5b77;
+  --brand: #20a7ad;
+  --brand-strong: #0e8f95;
+  --border: rgba(15, 23, 42, 0.12);
+  --input-bg: #f8fafc;
+  --shadow-sm: 0 6px 20px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 18px 50px rgba(15, 23, 42, 0.12);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
 }
 
+[data-theme="dark"] {
+  --bg: #0f1318;
+  --surface: #1a2028;
+  --surface-alt: #121821;
+  --text: #e6eef9;
+  --muted: #b5c1d3;
+  --brand: #39c5cc;
+  --brand-strong: #15aab1;
+  --border: rgba(230, 238, 249, 0.12);
+  --input-bg: #141b24;
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
 
-[data-theme='dark'] {
-  --background-color: #383B40;
-  --text-color: white;
-  --button-background-color: #1e1e1e;
-  --button-text-color: #35B8BE;
-  --background-second: #1F2023;
-  --input-background: #383B40;
-  --input-border: #444343;
-  --transparent-button: #35B8BE;
-
-
+* {
+  box-sizing: border-box;
 }
 
 html {
-  background-color: var(--background-color);
-  font-family: Inter;
-  color: var(--text-color);
-}
-
-button {
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  outline: none;
-  background-color: var(--button-background-color);
-  color: var(--button-text-color);
-}
-
-.app-wrapper-content{
-  padding-right: 10%;
-  padding-left: 10%;
-  padding-top: 70px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background:
+    radial-gradient(900px 400px at 10% -10%, rgba(32, 167, 173, 0.18), transparent 55%),
+    radial-gradient(600px 300px at 90% 0%, rgba(79, 70, 229, 0.08), transparent 55%),
+    var(--bg);
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+.app-wrapper-content {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 96px 24px 40px;
+}
+
 a {
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
-a:hover{
-  color: #8F9BB3;
-  text-decoration: underline;
+
+a:hover {
+  color: var(--brand-strong);
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 h1 {
-  font-size: 50px;
-  font-weight: 400;
-  color: #35b8be;
-}
-p{
-  color: #546285;
-}
-
-input{
-  padding: 8px 10px;
-  border: 1px solid var(--input-border);
-  background-color: var(--input-background);
-  text-align: center;
-  border-radius: 5px;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
 }
 
+h2, h3 {
+  color: var(--text);
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background-color: var(--input-bg);
+  text-align: left;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(32, 167, 173, 0.2);
+}

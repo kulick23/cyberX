@@ -1,62 +1,53 @@
 .menu {
     text-align: center;
-    align-items: center;
-    justify-content: center;
     display: flex;
     flex-direction: column;
-}
-
-.menu::before {
-    content: '';
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 50vw solid transparent;
-    border-bottom: 50px solid var(--background-second);
-    transform: rotate(180deg);
+    gap: 20px;
+    position: relative;
 }
 
 .menu span {
-    color: #35b8be;
+    color: var(--brand);
+    font-weight: 600;
 }
 
 .menu__buttons {
     display: flex;
-    gap: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-
 .menu__elements {
-    margin-top: 40px;
+    margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
 }
 
 .menu button {
-    padding: 15px 35px;
+    padding: 12px 26px;
 }
 
 .menu__buttons--button {
     background-color: transparent;
-    color: black;
-    border: 1px solid rgba(97, 114, 131, 0.2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: none;
 }
 
 .menu__button {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .phone-popup {
     position: absolute;
-    top: 35%;
+    top: 20%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
