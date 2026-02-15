@@ -16,7 +16,7 @@ const Login: React.FC = () => {
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            navigate('/');
+            navigate('/menu');
         } catch (error: any) {
             setError(error.message);
         }
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     const handleRegister = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            navigate('/');
+            navigate('/menu');
         } catch (error: any) {
             setError(error.message);
         }

@@ -6,6 +6,7 @@ import App from "./App";
 import { ThemeProvider } from "./ThemeContext";
 import store from "./store/store";
 import "./styles/index.css";
+import { AuthProvider } from "./components/AuthProvider";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -16,9 +17,11 @@ createRoot(rootElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
-          <App />
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

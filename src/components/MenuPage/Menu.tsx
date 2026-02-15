@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Menu.css';
 import MenuElement from './Menu_Element/Menu_Element';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +8,21 @@ import { useAuth } from '../AuthProvider';
 
 const categories = ['Dessert', 'Dinner', 'Breakfast'];
 
+interface MenuItem {
+    id: string;
+    name: string;
+    desc: string;
+    price: number;
+    img: string;
+    category: string;
+}
+
 const Menu: React.FC = () => {
     const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
     const [visible, setVisible] = useState<number>(6);
     const [activeCategory, setActiveCategory] = useState<string>(categories[1]);
+    const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+    const [quantity, setQuantity] = useState<number>(1);
     const dispatch = useDispatch();
     const { items, loading, error } = useSelector((state: RootState) => state.menu);
     const { isAuthenticated } = useAuth();
@@ -33,7 +44,10 @@ const Menu: React.FC = () => {
         setVisible(6);
     };
 
-    const filteredItems = items.filter((item) => item.category === activeCategory);
+    const filteredItems = useMemo(
+        () => items.filter((item) => item.category === activeCategory),
+        [items, activeCategory]
+    );
 
     const updateCart = (item: { id: string, name: string, quantity: number, price: number, img: string }) => {
         if (!isAuthenticated()) {
@@ -41,6 +55,19 @@ const Menu: React.FC = () => {
             return;
         }
         dispatch(addToCart(item));
+    };
+
+    const openItem = (item: MenuItem) => {
+        setSelectedItem(item);
+        setQuantity(1);
+    };
+
+    const closeItem = () => setSelectedItem(null);
+
+    const addSelectedToCart = () => {
+        if (!selectedItem) return;
+        if (quantity <= 0) return;
+        updateCart({ ...selectedItem, quantity });
     };
 
     if (loading) return <p>Loading...</p>;
@@ -55,7 +82,7 @@ const Menu: React.FC = () => {
                 desc={item.desc}
                 price={item.price}
                 img={item.img}
-                updateCart={() => updateCart({ ...item, quantity: 1 })}
+                onOpen={() => openItem(item as MenuItem)}
             />
         ));
 
@@ -95,10 +122,52 @@ const Menu: React.FC = () => {
                     <p>+3706535678</p>
                 </div>
             )}
+            {selectedItem && (
+                <div className="menu__overlay" onClick={closeItem}>
+                    <div className="menu__sheet" onClick={(e) => e.stopPropagation()}>
+                        <button className="menu__sheet-close" onClick={closeItem} type="button">
+                            ✕
+                        </button>
+                        <div className="menu__sheet-media">
+                            <img src={selectedItem.img} alt={selectedItem.name} />
+                        </div>
+                        <div className="menu__sheet-content">
+                            <div className="menu__sheet-header">
+                                <h2>{selectedItem.name}</h2>
+                                <p className="menu__sheet-price">$ {selectedItem.price.toFixed(2)}</p>
+                            </div>
+                            <p>{selectedItem.desc}</p>
+                            <div className="menu__sheet-actions">
+                                <div className="menu__qty">
+                                    <button
+                                        type="button"
+                                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setQuantity((q) => q + 1)}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                <button type="button" onClick={addSelectedToCart}>
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default Menu;
-
-
