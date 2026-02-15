@@ -1,29 +1,39 @@
 .menuelement {
-    background-color: var(--surface);
-    display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    display: flex;
     align-items: center;
-    padding: 18px 20px;
+    gap: 20px;
+    padding: 20px 24px;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     border: 1px solid var(--border);
     text-align: left;
     color: inherit;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-weight: 400;
+    letter-spacing: normal;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .menuelement:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .menuelement {
+    background: rgba(26, 32, 40, 0.85);
+}
+
+[data-theme="dark"] .menuelement:hover {
+    background-color: rgba(26, 32, 40, 0.95);
+    border-color: rgba(230, 238, 249, 0.2);
 }
 
 .menuelement img {
     width: 96px;
     height: 96px;
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 12px;
 }
 
 .menuelement__textblock {
