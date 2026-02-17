@@ -136,7 +136,9 @@ const Menu: React.FC = () => {
                                 <h2>{selectedItem.name}</h2>
                                 <p className="menu__sheet-price">$ {selectedItem.price.toFixed(2)}</p>
                             </div>
-                            <p>{selectedItem.desc}</p>
+                            <p className="menu__sheet-desc">
+                                {selectedItem.desc}
+                            </p>
                             <div className="menu__sheet-actions">
                                 <div className="menu__qty">
                                     <button

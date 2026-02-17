@@ -1,7 +1,8 @@
 import React from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
-import Logo from '../../images/Logo.svg';
+import LogoLight from '../../images/600px-CyberX_lightmode.png';
+import LogoDark from '../../images/600px-CyberX_darkmode.png';
 import Cart from '../../images/Cart.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -13,9 +14,11 @@ const Header: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const { isAuthenticated } = useAuth();
 
+    const logoSrc = theme === 'light' ? LogoLight : LogoDark;
+
     return (
         <header className='header'>
-            <img className='header__logo' src={Logo} alt="Logo" />
+            <img className='header__logo' src={logoSrc} alt="CyberX" />
             <div className='header__right'>
                 <div className='header__links'>
                     {isAuthenticated() ? (

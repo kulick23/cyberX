@@ -1,9 +1,11 @@
 import React from 'react';
 import './Footer.css';
-import Logo from '../../images/Logo.svg';
+import LogoLight from '../../images/600px-CyberX_lightmode.png';
+import LogoDark from '../../images/600px-CyberX_darkmode.png';
 import Inst from '../../images/inst.svg';
 import Twit from '../../images/twit.svg';
 import YouTube from '../../images/youtube.svg';
+import { useTheme } from '../../ThemeContext';
 
 interface Section {
     title: string;
@@ -17,6 +19,8 @@ interface SocialLink {
 }
 
 const Footer: React.FC = () => {
+    const { theme } = useTheme();
+    const logoSrc = theme === 'light' ? LogoLight : LogoDark;
     const sections: Section[] = [
         {
             title: 'COMPANY',
@@ -57,7 +61,7 @@ const Footer: React.FC = () => {
         <footer className='footer'>
             <div className='footer__linksblock'>
                 <div className='logoblock'>
-                    <img className='footer__logo' src={Logo} alt="Logo" />
+                    <img className='footer__logo' src={logoSrc} alt="CyberX" />
                     <p>Takeaway & Delivery template <br /> for small - medium businesses.</p>
                 </div>
                 {sections.map((section, index) => (
@@ -85,4 +89,3 @@ const Footer: React.FC = () => {
 }
 
 export default Footer;
-

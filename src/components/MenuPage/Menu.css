@@ -25,9 +25,7 @@
     gap: 24px;
 }
 
-.menu button {
-    padding: 12px 26px;
-}
+
 
 .menu__buttons--button {
     background-color: transparent;
@@ -58,7 +56,7 @@
     background: rgba(8, 12, 18, 0.45);
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     z-index: 50;
     padding: 24px;
 }
@@ -78,13 +76,17 @@
     position: absolute;
     top: 14px;
     right: 14px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    padding: 0;
     background: var(--surface-alt);
     border: 1px solid var(--border);
     color: var(--text);
     box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menu__sheet-media {
@@ -107,6 +109,12 @@
     text-align: left;
     display: grid;
     gap: 12px;
+}
+
+.menu__sheet-desc {
+    max-height: 220px;
+    overflow: auto;
+    padding-right: 6px;
 }
 
 .menu__sheet-header {
@@ -155,7 +163,7 @@
 
 @keyframes sheetUp {
     from {
-        transform: translateY(20px);
+        transform: translateY(8px);
         opacity: 0.8;
     }
     to {

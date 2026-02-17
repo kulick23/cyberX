@@ -57,12 +57,19 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
+    align-items: flex-start;
 }
 
 .menuelement__text p {
     color: var(--brand);
     font-weight: 600;
     margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.menuelement__text h3 {
+    flex: 1;
 }
 
 .menuelement__buttons {
