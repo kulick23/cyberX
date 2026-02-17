@@ -1,32 +1,28 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import { clearCart, updateCartItemQuantity, removeFromCart } from '../../store/cartSlice';
 import './Cart.css';
+import { useTranslation } from 'react-i18next';
+import { useCart } from '../../hooks/useCart';
 
 const Cart: React.FC = () => {
-    const cartItems = useSelector((state: RootState) => state.cart.items);
-    const totalQuantity = useSelector((state: RootState) => state.cart.totalQuantity);
-    const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
-    const dispatch = useDispatch();
-
-    const handleClearCart = () => {
-        dispatch(clearCart());
-    };
-
-    const handleQuantityChange = (id: string, quantity: number) => {
-        dispatch(updateCartItemQuantity({ id, quantity }));
-    };
-
-    const handleRemoveItem = (id: string) => {
-        dispatch(removeFromCart(id));
-    };
+    const { t } = useTranslation();
+    const {
+        cartItems,
+        totalAmount,
+        handleClearCart,
+        handleQuantityChange,
+        handleRemoveItem,
+        goBack,
+        quantityMin,
+    } = useCart();
 
     return (
         <div className="cart-page">
-            <h1>Finish your order</h1>
+            <button className="cart-back" onClick={goBack} aria-label={t('cart.back')}>
+                ← {t('cart.back')}
+            </button>
+            <h1>{t('cart.title')}</h1>
             {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <p>{t('cart.empty')}</p>
             ) : (
                 <div>
                     <ul className="cart-items">
@@ -44,7 +40,7 @@ const Cart: React.FC = () => {
                                         type="number"
                                         value={item.quantity}
                                         onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                                        min="1"
+                                        min={quantityMin}
                                     />
                                     <button onClick={() => handleRemoveItem(item.id)}>✖</button>
                                 </div>
@@ -52,23 +48,23 @@ const Cart: React.FC = () => {
                         ))}
                     </ul>
                     <div className="cart-summary">
-                        <p>Total Amount: ${totalAmount.toFixed(2)}</p>
+                        <p>{t('cart.total')}: ${totalAmount.toFixed(2)}</p>
                         <div className='cart__inputs'>
-                            <label>Street</label>
+                            <label>{t('cart.street')}</label>
                             <input
                                 type='street'
                             />
                         </div>
                         <div className='cart__inputs'>
-                            <label>House</label>
+                            <label>{t('cart.house')}</label>
                             <input
                                 type='number'
 
                             />
                         </div>
                         <div className="cart__summary--buttons">
-                        <button className="cart__summary--clear" onClick={handleClearCart}>Clear Cart</button>
-                        <button >Order</button>
+                        <button className="cart__summary--clear" onClick={handleClearCart}>{t('cart.clear')}</button>
+                        <button>{t('cart.order')}</button>
                         </div>
                     </div>
                 </div>

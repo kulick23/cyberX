@@ -1,50 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Menu.css';
 import MenuElement from './Menu_Element/Menu_Element';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { addToCart } from '../../store/cartSlice';
-import { useAuth } from '../AuthProvider';
-
-const categories = ['Dessert', 'Dinner', 'Breakfast'];
+import { useTranslation } from 'react-i18next';
+import { useMenu } from '../../hooks/useMenu';
+import { PHONE_NUMBER } from '../../constants/app';
 
 const Menu: React.FC = () => {
-    const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
-    const [visible, setVisible] = useState<number>(6);
-    const [activeCategory, setActiveCategory] = useState<string>(categories[1]);
-    const dispatch = useDispatch();
-    const { items, loading, error } = useSelector((state: RootState) => state.menu);
-    const { isAuthenticated } = useAuth();
+    const { t } = useTranslation();
+    const {
+        loading,
+        error,
+        visible,
+        activeCategory,
+        selectedItem,
+        quantity,
+        filteredItems,
+        handleSeeMore,
+        handleCategoryClick,
+        openItem,
+        closeItem,
+        addSelectedToCart,
+        setQuantity,
+        increaseQty,
+        decreaseQty,
+        categories,
+        quantityMin,
+    } = useMenu();
 
-    const handleSeeMore = () => {
-        setVisible(prevVisible => prevVisible + 6);
-    };
-
-    const handlePhoneHover = () => {
-        setShowPhoneNumber(true);
-    };
-
-    const handlePhoneLeave = () => {
-        setShowPhoneNumber(false);
-    };
-
-    const handleCategoryClick = (category: string) => {
-        setActiveCategory(category);
-        setVisible(6);
-    };
-
-    const filteredItems = items.filter((item) => item.category === activeCategory);
-
-    const updateCart = (item: { id: string, name: string, quantity: number, price: number, img: string }) => {
-        if (!isAuthenticated()) {
-            alert('You must be logged in to add items to the cart.');
-            return;
-        }
-        dispatch(addToCart(item));
-    };
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading menu: {error}</p>;
+    if (loading) return <p>{t('menu.loading')}</p>;
+    if (error) return <p>{t('menu.error')} {error}</p>;
 
     const MenuItems = filteredItems
         .slice(0, visible)
@@ -55,44 +39,89 @@ const Menu: React.FC = () => {
                 desc={item.desc}
                 price={item.price}
                 img={item.img}
-                updateCart={() => updateCart({ ...item, quantity: 1 })}
+                onOpen={() => openItem(item)}
             />
         ));
 
     return (
         <div className='menu'>
-            <h1>Browse our menu</h1>
+            <h1>{t('menu.title')}</h1>
             <p>
-                Use our menu to place an order online, or{' '}
-                <span
-                    onMouseEnter={handlePhoneHover}
-                    onMouseLeave={handlePhoneLeave}
-                >
-                    phone
-                </span>{' '}
-                our store
-                <br /> to place a pickup order. Fast and fresh food.
+                {t('menu.descriptionPrefix')}{' '}
+                <a href={`tel:${PHONE_NUMBER}`}>{t('menu.phone')}</a>{' '}
+                {t('menu.descriptionSuffix')}
             </p>
             <div className='menu__buttons'>
                 {categories.map((category) => (
                     <button
-                        key={category}
-                        className={activeCategory === category ? '' : 'menu__buttons--button'}
-                        onClick={() => handleCategoryClick(category)}
+                        key={category.id}
+                        className={activeCategory === category.value ? '' : 'menu__buttons--button'}
+                        onClick={() => handleCategoryClick(category.value)}
                     >
-                        {category}
+                        {t(category.i18nKey)}
                     </button>
                 ))}
             </div>
             <div className='menu__elements'>{MenuItems}</div>
             {filteredItems.length > visible && (
                 <button className='menu__button' onClick={handleSeeMore}>
-                    See more
+                    {t('menu.seeMore')}
                 </button>
             )}
-            {showPhoneNumber && (
-                <div className='phone-popup'>
-                    <p>+3706535678</p>
+            {selectedItem && (
+                <div className="menu__overlay" onClick={closeItem}>
+                    <div className="menu__sheet" onClick={(e) => e.stopPropagation()}>
+                        <button className="menu__sheet-close" onClick={closeItem} type="button">
+                            ✕
+                        </button>
+                        <div className="menu__sheet-media">
+                            <img src={selectedItem.img} alt={selectedItem.name} />
+                        </div>
+                        <div className="menu__sheet-content">
+                            <div className="menu__sheet-header">
+                                <h2>{selectedItem.name}</h2>
+                                <p className="menu__sheet-price">
+                                    $ {selectedItem.price.toFixed(2)} {t('common.usd')}
+                                </p>
+                            </div>
+                            <p className="menu__sheet-desc">
+                                {selectedItem.desc}
+                            </p>
+                            <div className="menu__sheet-actions">
+                                <div className="menu__qty">
+                                    <button
+                                        type="button"
+                                        onClick={decreaseQty}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        min={quantityMin}
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(Math.max(quantityMin, Number(e.target.value)))}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={increaseQty}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const ok = addSelectedToCart();
+                                        if (ok === false) {
+                                            alert(t('menu.authRequired'));
+                                        }
+                                    }}
+                                >
+                                    {t('menu.addToCart')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
@@ -100,5 +129,3 @@ const Menu: React.FC = () => {
 };
 
 export default Menu;
-
-

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from './AuthProvider';
 import { Navigate } from 'react-router-dom';
+import { ROUTES } from '../constants/routes';
 
 interface ProtectedRouteProps {
     element: React.ReactElement;
@@ -9,7 +10,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
     const { isAuthenticated } = useAuth();
 
-    return isAuthenticated() ? element : <Navigate to="/login" replace />;
+    return isAuthenticated() ? element : <Navigate to={ROUTES.LOGIN} replace />;
 };
 
 export default ProtectedRoute;

@@ -1,54 +1,40 @@
 import React from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
-import Logo from '../../images/Logo.svg';
 import Cart from '../../images/Cart.svg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { useTheme} from "../../ThemeContext";
+import { useTranslation } from 'react-i18next';
+import { useHeader } from '../../hooks/useHeader';
+import { ROUTES } from '../../constants/routes';
 
 const Header: React.FC = () => {
-    const cartItems = useSelector((state: RootState) => state.cart.totalQuantity);
-    const { theme, toggleTheme } = useTheme();
+    const { t } = useTranslation();
+    const { cartItems, mode, setMode, logoSrc } = useHeader();
 
     return (
         <header className='header'>
-            <img className='header__logo' src={Logo} alt="Logo" />
+            <img className='header__logo' src={logoSrc} alt="CyberX" />
             <div className='header__right'>
-                <div className='header__links'>
-                    <NavLink
-                        to="/"
-                        end
-                        className={({ isActive }) => isActive ? 'header__link header__link--active' : 'header__link'}
+                <label className="header__theme">
+                    <span className="header__theme-label">{t('header.theme')}</span>
+                    <select
+                        value={mode}
+                        onChange={(event) => setMode(event.target.value as 'light' | 'dark' | 'system')}
+                        aria-label={t('header.theme')}
                     >
-                        Home
-                    </NavLink>
-                    <NavLink
-                        to="/menu"
-                        className={({ isActive }) => isActive ? 'header__link header__link--active' : 'header__link'}
-                    >
-                        Menu
-                    </NavLink>
-                    <NavLink
-                        to="/login"
-                        className={({ isActive }) => isActive ? 'header__link header__link--active' : 'header__link'}
-                    >
-                        Login
-                    </NavLink>
-                </div>
-                <NavLink to="/cart">
-                    <button className='header__button'>
+                        <option value="light">{t('header.light')}</option>
+                        <option value="dark">{t('header.dark')}</option>
+                        <option value="system">{t('header.system')}</option>
+                    </select>
+                </label>
+                <NavLink to={ROUTES.CART}>
+                    <button className='header__button' aria-label={t('header.cart')}>
                         <img src={Cart} alt="Cart" />
                         <div className='header__button-counter'>{cartItems}</div>
                     </button>
                 </NavLink>
-                <button onClick={toggleTheme}>
-                    {theme === 'light' ? 'Dark' : 'Light'} Mode
-                </button>
             </div>
         </header>
     );
 };
 
 export default Header;
-

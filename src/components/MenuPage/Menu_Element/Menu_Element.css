@@ -1,43 +1,90 @@
-.menuelement{
-    background-color: var(--background-second);
+.menuelement {
+    background: rgba(255, 255, 255, 0.85);
     display: flex;
     align-items: center;
-    padding: 20px 15% 20px 20px;
+    gap: 20px;
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: none;
+    border: 1px solid var(--border);
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    font-weight: 400;
+    letter-spacing: normal;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 }
-.menuelement img{
-    max-height: 120px;
+
+.menuelement:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .menuelement {
+    background: rgba(26, 32, 40, 0.85);
+}
+
+[data-theme="dark"] .menuelement:hover {
+    background-color: rgba(26, 32, 40, 0.95);
+    border-color: rgba(230, 238, 249, 0.2);
+}
+
+.menuelement img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
 .menuelement__textblock {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    gap: 10px;
     text-align: left;
-    margin-left: 30px;
 }
-.menuelement__textblock p{
-    color: #546285;
+
+.menuelement__textblock p {
+    color: var(--muted);
 }
-.menuelement__textblock h3{
-    font-weight: 450;
+
+.menuelement__textblock h3 {
+    font-weight: 600;
+    margin: 0;
 }
-.menuelement__text{
+
+.menuelement__text {
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
-.menuelement__text p{
-    margin-top: 6%;
-    color: #35B8BE;
-}
-.menuelement__buttons{
-    display: flex;
-    gap: 10px;
-}
-.menuelement__buttons input{
-    padding-top: 2.5% ;
-    padding-bottom: 2.5%;
-    width: 15%;
+    gap: 12px;
+    align-items: flex-start;
 }
 
+.menuelement__text p {
+    color: var(--brand);
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.menuelement__text h3 {
+    flex: 1;
+}
+
+.menuelement__buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.menuelement__buttons input {
+    width: 72px;
+    text-align: center;
+}
+
+.expand-description {
+    color: var(--brand);
+    font-weight: 600;
+    cursor: pointer;
+}
