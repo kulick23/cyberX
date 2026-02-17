@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface ThemeContextProps {
-    theme: string;
-    toggleTheme: () => void;
+    theme: 'light' | 'dark';
+    mode: 'light' | 'dark' | 'system';
+    setMode: (mode: 'light' | 'dark' | 'system') => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -15,25 +16,27 @@ const getSystemTheme = (): string => {
 };
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [theme, setTheme] = useState(getSystemTheme);
+    const [mode, setMode] = useState<'light' | 'dark' | 'system'>('system');
+    const [theme, setTheme] = useState<'light' | 'dark'>(getSystemTheme);
 
     useEffect(() => {
+        if (mode !== 'system') {
+            setTheme(mode);
+            return;
+        }
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (e: MediaQueryListEvent) => {
             setTheme(e.matches ? 'dark' : 'light');
         };
+        setTheme(mediaQuery.matches ? 'dark' : 'light');
         mediaQuery.addEventListener('change', handleChange);
         return () => {
             mediaQuery.removeEventListener('change', handleChange);
         };
-    }, []);
-
-    const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+    }, [mode]);
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, mode, setMode }}>
             {children}
         </ThemeContext.Provider>
     );

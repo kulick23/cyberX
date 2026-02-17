@@ -96,6 +96,34 @@
     background: var(--surface);
 }
 
+.header__theme {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.header__theme-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.header__theme select {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.header__theme select:focus {
+    outline: none;
+}
+
 @media (max-width: 820px) {
     .header {
         padding: 14px 18px;

@@ -10,7 +10,7 @@ import { useTheme} from "../../ThemeContext";
 
 const Header: React.FC = () => {
     const cartItems = useSelector((state: RootState) => state.cart.totalQuantity);
-    const { theme, toggleTheme } = useTheme();
+    const { theme, mode, setMode } = useTheme();
 
     const logoSrc = theme === 'light' ? LogoLight : LogoDark;
 
@@ -18,15 +18,24 @@ const Header: React.FC = () => {
         <header className='header'>
             <img className='header__logo' src={logoSrc} alt="CyberX" />
             <div className='header__right'>
+                <label className="header__theme">
+                    <span className="header__theme-label">Theme</span>
+                    <select
+                        value={mode}
+                        onChange={(event) => setMode(event.target.value as 'light' | 'dark' | 'system')}
+                        aria-label="Theme"
+                    >
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="system">System</option>
+                    </select>
+                </label>
                 <NavLink to="/cart">
                     <button className='header__button' aria-label="Open cart">
                         <img src={Cart} alt="Cart" />
                         <div className='header__button-counter'>{cartItems}</div>
                     </button>
                 </NavLink>
-                <button onClick={toggleTheme}>
-                    {theme === 'light' ? 'Dark' : 'Light'} Mode
-                </button>
             </div>
         </header>
     );
