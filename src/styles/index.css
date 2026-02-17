@@ -62,7 +62,7 @@ body {
 .app-wrapper-content {
   width: min(1120px, 100%);
   margin: 0 auto;
-  padding: 96px 24px 40px;
+  padding: 40px 24px 40px;
 }
 
 a {

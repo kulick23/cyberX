@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 20px;
     position: relative;
+    padding-top: 56px;
 }
 
 .menu span {

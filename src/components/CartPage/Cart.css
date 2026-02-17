@@ -8,7 +8,8 @@
     border: 1px solid var(--border);
     color: var(--text);
     box-shadow: none;
-    margin-bottom: 12px;
+    margin: -12px 0 30px;
+    align-self: flex-start;
 }
 
 .cart-items {
