@@ -1,60 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Login.css';
-import { auth } from '../../firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthProvider';
+import { useTranslation } from 'react-i18next';
+import { useLogin } from '../../hooks/useLogin';
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState<string | null>(null);
-    const [isRegistering, setIsRegistering] = useState<boolean>(false);
-    const navigate = useNavigate();
-    const { currentUser } = useAuth();
-
-    const handleLogin = async () => {
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            navigate('/menu');
-        } catch (error: any) {
-            setError(error.message);
-        }
-    };
-
-    const handleRegister = async () => {
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            navigate('/menu');
-        } catch (error: any) {
-            setError(error.message);
-        }
-    };
-
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            navigate('/login');
-        } catch (error: any) {
-            setError(error.message);
-        }
-    };
+    const { t } = useTranslation();
+    const {
+        email,
+        password,
+        error,
+        isRegistering,
+        currentUser,
+        setEmail,
+        setPassword,
+        setIsRegistering,
+        handleLogin,
+        handleRegister,
+        handleLogout,
+    } = useLogin();
 
     return (
         <div className='login'>
             {currentUser ? (
                 <div>
-                    <h1>You are logged in</h1>
+                    <h1>{t('login.loggedIn')}</h1>
                     <p>{currentUser.email}</p>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleLogout}>{t('login.logout')}</button>
                 </div>
             ) : (
                 <div>
-                    <h1>{isRegistering ? 'Register' : 'Log in'}</h1>
+                    <h1>{isRegistering ? t('login.titleRegister') : t('login.titleLogin')}</h1>
                     <div className='login__box'>
                         {error && <p className='error'>{error}</p>}
                         <div className='login__inputs'>
-                            <label>Email</label>
+                            <label>{t('login.email')}</label>
                             <input
                                 type='email'
                                 value={email}
@@ -62,7 +41,7 @@ const Login: React.FC = () => {
                             />
                         </div>
                         <div className='login__inputs'>
-                            <label>Password</label>
+                            <label>{t('login.password')}</label>
                             <input
                                 type='password'
                                 value={password}
@@ -72,13 +51,21 @@ const Login: React.FC = () => {
                         <div className='login__buttons'>
                             {isRegistering ? (
                                 <>
-                                    <button className='login__submit' onClick={handleRegister}>Register</button>
-                                    <button className='login__toggle' onClick={() => setIsRegistering(false)}>Already have an account? Log in</button>
+                                    <button className='login__submit' onClick={handleRegister}>
+                                        {t('login.register')}
+                                    </button>
+                                    <button className='login__toggle' onClick={() => setIsRegistering(false)}>
+                                        {t('login.toggleToLogin')}
+                                    </button>
                                 </>
                             ) : (
                                 <>
-                                    <button className='login__submit' onClick={handleLogin}>Submit</button>
-                                    <button className='login__toggle' onClick={() => setIsRegistering(true)}>Don't have an account? Register</button>
+                                    <button className='login__submit' onClick={handleLogin}>
+                                        {t('login.submit')}
+                                    </button>
+                                    <button className='login__toggle' onClick={() => setIsRegistering(true)}>
+                                        {t('login.toggleToRegister')}
+                                    </button>
                                 </>
                             )}
                         </div>
@@ -87,6 +74,6 @@ const Login: React.FC = () => {
             )}
         </div>
     );
-}
+};
 
 export default Login;

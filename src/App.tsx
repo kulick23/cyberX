@@ -9,6 +9,7 @@ import { useAuth } from './components/AuthProvider';
 import { useAppDispatch } from './store/hooks';
 import { fetchMenuItems } from './store/menuSlice';
 import { useTheme} from "./ThemeContext";
+import { ROUTES } from "./constants/routes";
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -28,14 +29,14 @@ const App: React.FC = () => {
             <Header />
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path="/" element={<Navigate to="/menu" replace />} />
-                    <Route path="/menu" element={<ProtectedRoute element={<Menu />} />} />
+                    <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.MENU} replace />} />
+                    <Route path={ROUTES.MENU} element={<ProtectedRoute element={<Menu />} />} />
                     <Route
-                        path="/login"
-                        element={isAuthenticated() ? <Navigate to="/menu" replace /> : <Login />}
+                        path={ROUTES.LOGIN}
+                        element={isAuthenticated() ? <Navigate to={ROUTES.MENU} replace /> : <Login />}
                     />
                     <Route
-                        path="/cart"
+                        path={ROUTES.CART}
                         element={<ProtectedRoute element={<Cart />} />}
                     />
                 </Routes>

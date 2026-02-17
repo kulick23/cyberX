@@ -7,6 +7,7 @@ import { ThemeProvider } from "./ThemeContext";
 import store from "./store/store";
 import "./styles/index.css";
 import { AuthProvider } from "./components/AuthProvider";
+import "./i18n";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
