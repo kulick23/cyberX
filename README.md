@@ -51,5 +51,3 @@ npm run build
 ```
 Output is in `dist/`.
 
-## Notes
-- Telegram initData auth requires a server-side verifier (Firebase Functions or similar). Frontend only shows the UI flow.
