@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearCart, updateCartItemQuantity, removeFromCart } from '../../store/cartSlice';
 import './Cart.css';
+import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
     const cartItems = useSelector((state: RootState) => state.cart.items);
     const totalQuantity = useSelector((state: RootState) => state.cart.totalQuantity);
     const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleClearCart = () => {
         dispatch(clearCart());
@@ -24,6 +26,9 @@ const Cart: React.FC = () => {
 
     return (
         <div className="cart-page">
+            <button className="cart-back" onClick={() => navigate('/menu')} aria-label="Back to menu">
+                ← Back
+            </button>
             <h1>Finish your order</h1>
             {cartItems.length === 0 ? (
                 <p>Your cart is empty.</p>

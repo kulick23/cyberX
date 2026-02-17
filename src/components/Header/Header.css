@@ -65,6 +65,10 @@
     height: 22px;
 }
 
+[data-theme="light"] .header__button img {
+    filter: invert(1) brightness(1.2);
+}
+
 .header__button-counter {
     position: absolute;
     top: -8px;

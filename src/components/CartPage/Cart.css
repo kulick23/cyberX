@@ -3,6 +3,14 @@
     margin-bottom: 24px;
 }
 
+.cart-back {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    box-shadow: none;
+    margin-bottom: 12px;
+}
+
 .cart-items {
     list-style: none;
     padding: 0;
