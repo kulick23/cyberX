@@ -59,13 +59,13 @@ const Cart: React.FC = () => {
                     <div className="cart-summary">
                         <p>Total Amount: ${totalAmount.toFixed(2)}</p>
                         <div className='cart__inputs'>
-                            <label>Street</label>
+                            <label>Zone</label>
                             <input
                                 type='street'
                             />
                         </div>
                         <div className='cart__inputs'>
-                            <label>House</label>
+                            <label>Table</label>
                             <input
                                 type='number'
 

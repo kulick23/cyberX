@@ -97,7 +97,7 @@ const Menu: React.FC = () => {
                 >
                     phone
                 </span>{' '}
-                our store
+                our club
                 <br /> to place a pickup order. Fast and fresh food.
             </p>
             <div className='menu__buttons'>
