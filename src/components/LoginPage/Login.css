@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    padding: 0 16px;
 }
 
 .login__box {
@@ -12,6 +13,7 @@
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border);
     min-width: min(420px, 100%);
+    margin-top: 30px;
 }
 
 .login__inputs {
@@ -39,4 +41,21 @@
     color: var(--text);
     border: 1px solid var(--border);
     box-shadow: none;
+}
+
+@media (max-width: 520px) {
+    .login__box {
+        padding: 24px 20px;
+        border-radius: 18px;
+    }
+
+    .login__inputs {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .login__submit,
+    .login__toggle {
+        width: 100%;
+    }
 }
