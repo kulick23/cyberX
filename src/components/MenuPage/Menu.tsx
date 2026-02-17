@@ -18,7 +18,6 @@ interface MenuItem {
 }
 
 const Menu: React.FC = () => {
-    const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
     const [visible, setVisible] = useState<number>(6);
     const [activeCategory, setActiveCategory] = useState<string>(categories[1]);
     const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
@@ -31,13 +30,6 @@ const Menu: React.FC = () => {
         setVisible(prevVisible => prevVisible + 6);
     };
 
-    const handlePhoneHover = () => {
-        setShowPhoneNumber(true);
-    };
-
-    const handlePhoneLeave = () => {
-        setShowPhoneNumber(false);
-    };
 
     const handleCategoryClick = (category: string) => {
         setActiveCategory(category);
@@ -91,13 +83,7 @@ const Menu: React.FC = () => {
             <h1>Browse our menu</h1>
             <p>
                 Use our menu to place an order online, or{' '}
-                <span
-                    onMouseEnter={handlePhoneHover}
-                    onMouseLeave={handlePhoneLeave}
-                >
-                    phone
-                </span>{' '}
-                our club
+                <a href="tel:+3706535678">phone</a> our club
                 <br /> to place a pickup order. Fast and fresh food.
             </p>
             <div className='menu__buttons'>
@@ -116,11 +102,6 @@ const Menu: React.FC = () => {
                 <button className='menu__button' onClick={handleSeeMore}>
                     See more
                 </button>
-            )}
-            {showPhoneNumber && (
-                <div className='phone-popup'>
-                    <p>+3706535678</p>
-                </div>
             )}
             {selectedItem && (
                 <div className="menu__overlay" onClick={closeItem}>
